@@ -18,4 +18,4 @@ endif
 
 pyfile auto-cmake.py
 
-command! CMake :python hello_vim()
+command! Cmake :python hello_vim()

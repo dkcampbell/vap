@@ -1,4 +1,5 @@
 import vim
 
 def hello_vim():
-    print('Hello Python')
+    build_directory = vim.eval('g:auto_cmake_build_dir')
+    print(build_directory)
