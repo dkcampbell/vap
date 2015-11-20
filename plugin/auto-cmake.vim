@@ -16,6 +16,6 @@ if !exists('g:auto_cmake_build_dir')
     let g:auto_cmake_build_dir = '~/builds'
 endif
 
-function! CMake()
+pyfile auto-cmake.py
 
-endfunc
+command! CMake :python hello_vim()
