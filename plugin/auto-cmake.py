@@ -50,10 +50,16 @@ def loadDb():
     db_file.close()
 
 def cmake_edit():
-    vim.command('edit ' + bdir + '/builds.json')
+    vim.command('edit ' + bfile)
 
 def cmake_reload():
     loadDb()
+
+def cmake_configure():
+    cwd = vim.command('pwd')
+    if cwd in database.builds:
+        if not os.path.exists(cwd):
+            os.mkdir(cwd)
 
 def cmake_auto():
     '''
