@@ -17,7 +17,6 @@ def auto_cmake_init():
     # Create build directory if it doesn't already exist
     global bdir
     global bfile
-    global database
     bdir = os.path.expanduser(vim.eval('g:auto_cmake_build_dir'))
     if not os.path.isdir(bdir):
         os.mkdir(bdir)
@@ -27,6 +26,7 @@ def auto_cmake_init():
         db_file = open(bfile, 'w')
         template = {}
         template['source_location'] = {
+            'name'       : 'folder-name',
             'type'       : 'Debug',
             'cc'         : 'clang',
             'cxx'        : 'clang++',
@@ -39,10 +39,12 @@ def auto_cmake_init():
         db = CMakeDatabase(template)
         db_file.write(str(db))
         db_file.close()
+        loadDb()
     else:
         loadDb()
 
 def loadDb():
+    global database
     db_file = open(bfile)
     database = CMakeDatabase(json.loads(db_file.read())['builds'])
     db_file.close()
@@ -53,5 +55,12 @@ def cmake_edit():
 def cmake_reload():
     loadDb()
 
-def hello_vim():
-    print(database)
+def cmake_auto():
+    '''
+    Fucction to be automatically callled when a CMake directory is found.
+    '''
+    bname = database.builds['/home/dan/tmp/blob-detect']['name']
+    vim.command('set makeprg=make\ -C\ ' + bname)
+
+def debug():
+    cmake_auto()

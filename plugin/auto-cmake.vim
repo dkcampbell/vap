@@ -21,6 +21,6 @@ pyfile auto-cmake.py
 "Initialize the build directory if this is the first time auto-cmake is used.
 python auto_cmake_init()
 
-command! CMake :python hello_vim()
+command! CMake :python debug()
 command! CMakeEdit :python cmake_edit()
 command! CMakeReload :python cmake_reload()
