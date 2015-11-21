@@ -2,7 +2,7 @@
 "Maintainer:   Dan Campbell <http://compiledworks.com>
 "Version:      0.0
 
-"if exists('g:loaded_auto_cmake') || &compatible
+"if exists('g:loaded_auto_cmake') || &cp
 "    finish
 "else
 "    let g:loaded_auto_cmake = 1
@@ -21,4 +21,5 @@ pyfile auto-cmake.py
 "Initialize the build directory if this is the first time auto-cmake is used.
 python auto_cmake_init()
 
-command! Cmake :python hello_vim()
+command! CMake :python hello_vim()
+command! CMakeEdit :python cmake_edit()

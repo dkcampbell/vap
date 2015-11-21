@@ -3,21 +3,47 @@ import os
 import vim
 
 class CMakeDatabase(object):
-    def __init__(self, builds):
-        self.builds = builds
+    def __init__(self, builds=None):
+        if builds is not None:
+            self.builds = builds
+        else:
+            self.builds = {}
 
-    def dump():
-        for build in builds:
-            json.dump(build.dump)
-
-class CMakeBuild(object):
-    pass
+    def __str__(self):
+        return json.dumps(self.__dict__, sort_keys=True, indent=4,
+                separators=(',', ': '))
 
 def auto_cmake_init():
+    # Create build directory if it doesn't already exist
     global bdir
+    global database
     bdir = os.path.expanduser(vim.eval('g:auto_cmake_build_dir'))
     if not os.path.isdir(bdir):
         os.mkdir(bdir)
+    # Create configuration file if it doesn't already exits
+    if not os.path.exists(bdir + '/builds.json'):
+        db_file = open(bdir + '/builds.json', 'w')
+        template = {}
+        template['source_location'] = {
+            'type'       : 'Debug',
+            'cc'         : 'clang',
+            'cxx'        : 'clang++',
+            'toolchain'  : '',
+            'extra_args' : '',
+            'run'        : '',
+            'debug_run'  : '',
+            'generator'  : 'Unix Makefiles'
+        }
+        db = CMakeDatabase(template)
+        db_file.write(str(db))
+        db_file.close()
+    else:
+        db_file = open(bdir + '/builds.json')
+        database = CMakeDatabase(json.loads(db_file.read())['builds'])
+        db_file.close()
+
+def cmake_edit():
+    vim.command('edit ' + bdir + '/builds.json')
 
 def hello_vim():
-    print(bdir)
+    print(database)
