@@ -23,3 +23,4 @@ python auto_cmake_init()
 
 command! CMake :python hello_vim()
 command! CMakeEdit :python cmake_edit()
+command! CMakeReload :python cmake_reload()

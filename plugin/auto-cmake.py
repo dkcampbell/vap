@@ -16,13 +16,15 @@ class CMakeDatabase(object):
 def auto_cmake_init():
     # Create build directory if it doesn't already exist
     global bdir
+    global bfile
     global database
     bdir = os.path.expanduser(vim.eval('g:auto_cmake_build_dir'))
     if not os.path.isdir(bdir):
         os.mkdir(bdir)
+    bfile = bdir + '/builds.json'
     # Create configuration file if it doesn't already exits
-    if not os.path.exists(bdir + '/builds.json'):
-        db_file = open(bdir + '/builds.json', 'w')
+    if not os.path.exists(bfile):
+        db_file = open(bfile, 'w')
         template = {}
         template['source_location'] = {
             'type'       : 'Debug',
@@ -38,12 +40,18 @@ def auto_cmake_init():
         db_file.write(str(db))
         db_file.close()
     else:
-        db_file = open(bdir + '/builds.json')
-        database = CMakeDatabase(json.loads(db_file.read())['builds'])
-        db_file.close()
+        loadDb()
+
+def loadDb():
+    db_file = open(bfile)
+    database = CMakeDatabase(json.loads(db_file.read())['builds'])
+    db_file.close()
 
 def cmake_edit():
     vim.command('edit ' + bdir + '/builds.json')
+
+def cmake_reload():
+    loadDb()
 
 def hello_vim():
     print(database)
