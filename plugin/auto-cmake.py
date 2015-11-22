@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import vim
 
 class CMakeDatabase(object):
@@ -64,6 +65,16 @@ def loadDb():
     database = CMakeDatabase(json.loads(db_file.read()))
     db_file.close()
 
+# Function auto loaded when a cmake build is found
+def cmake_auto():
+    '''
+    Fucction to be automatically callled when a CMake directory is found.
+    '''
+    bname = database.builds['/home/dan/tmp/blob-detect']['name']
+    vim.command('set makeprg=make\ -C\ ' + bname)
+
+
+# Public facing functions from the vim plugin
 def cmake_edit():
     vim.command('edit ' + bfile)
 
@@ -75,13 +86,6 @@ def cmake_generate():
     if cwd in database.builds:
         if not os.path.exists(cwd):
             os.mkdir(cwd)
-
-def cmake_auto():
-    '''
-    Fucction to be automatically callled when a CMake directory is found.
-    '''
-    bname = database.builds['/home/dan/tmp/blob-detect']['name']
-    vim.command('set makeprg=make\ -C\ ' + bname)
 
 def debug():
     cmake_auto()
