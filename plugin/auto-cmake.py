@@ -65,12 +65,16 @@ def loadDb():
     database = CMakeDatabase(json.loads(db_file.read()))
     db_file.close()
 
+def get_current_build():
+    return database.builds['source_location']['debug']
+
+
 # Function auto loaded when a cmake build is found
 def cmake_auto():
     '''
     Fucction to be automatically callled when a CMake directory is found.
     '''
-    bname = database.builds['/home/dan/tmp/blob-detect']['name']
+    bname = get_current_build()['name']
     vim.command('set makeprg=make\ -C\ ' + bname)
 
 
@@ -80,6 +84,12 @@ def cmake_edit():
 
 def cmake_reload():
     loadDb()
+
+def cmake_run():
+    subprocess.call(get_current_build()['run'], '')
+
+def cmake_debug():
+    subprocess.call(get_current_build()['debug'], '')
 
 def cmake_generate():
     cwd = vim.command('pwd')
