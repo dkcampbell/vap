@@ -13,7 +13,7 @@ if !has('python')
 endif
 
 if !exists('g:auto_cmake_builds_config')
-    let g:auto_cmake_build_config = '~/builds.json'
+    let g:auto_cmake_builds_config = '~/builds.json'
 endif
 
 let s:cwd = escape(expand('<sfile>:p:h'), '\')
