@@ -73,6 +73,19 @@ def get_current_build():
     else:
         return None
 
+# TODO: Make this more robust
+def set_make_prg(build):
+    if 'generator' in build:
+        if build['generator'] == 'Unix Makefiles':
+            vim.command('set makeprg=make\ -C\ ' + build['dir_name'])
+        elif build['generator'] == 'Ninja':
+            vim.command('set makeprg=ninja\ -C\ ' + build['dir_name'])
+
+    # Assume the default is makefiles
+    else:
+        vim.command('set makeprg=make\ -C\ ' + build['dir_name'])
+
+
 
 # Function auto loaded when a cmake build is found
 def cmake_auto():
@@ -82,8 +95,7 @@ def cmake_auto():
     build = get_current_build()
 
     if build is not None:
-        bname = get_current_build()['dir_name']
-        vim.command('set makeprg=make\ -C\ ' + bname)
+        set_make_prg()
 
 
 # Public facing functions from the vim plugin
