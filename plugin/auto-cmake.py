@@ -29,11 +29,11 @@ def auto_cmake_init():
         template['source_location'] = {
             'debug': {
                 'dir_name'   : 'folder-name',
-                'type'       : 'Debug',
+                'type'       : 'DEBUG',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'toolchain'  : '',
-                'extra_args' : '',
+                'extra_args' : [],
                 'run'        : '',
                 'debug_run'  : '',
                 'generator'  : 'Unix Makefiles',
@@ -41,11 +41,11 @@ def auto_cmake_init():
             },
             'release': {
                 'dir_name'   : 'folder-name',
-                'type'       : 'Release',
+                'type'       : 'RELEASE',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'toolchain'  : '',
-                'extra_args' : '',
+                'extra_args' : [],
                 'run'        : '',
                 'debug_run'  : '',
                 'generator'  : 'Unix Makefiles',
@@ -107,11 +107,38 @@ def cmake_generate():
     if not os.path.exists(build['dir_name']):
         os.mkdir(build['dir_name'])
 
+    command = [
+        'cmake',
+        '-B' + build['dir_name'],
+        '-H/home/dan/tmp/blob-detect'
+    ]
+
+    # Check if option is a non-empty string
+    if 'cc' in build and build['cc']:
+        os.environ['CC'] = build['cc']
+
+    if 'cxx' in build and build['cxx']:
+        os.environ['CXX'] = build['cxx']
+
+    if 'type' in build and build['type']:
+        command.append('-DCMAKE_BUILD_TYPE=' + build['type'])
+
+    if 'toolchain' in build and build['toolchain']:
+        command.append('-DCMAKE_TOOLCHAIN_FILE=' + build['toolchain'])
+
+    if 'extra_args' in build:
+        for arg in build['extra_args']:
+            command.append(arg)
+
+    if 'generator' in build and build['generator']:
+        command.append('-G')
+        command.append(build['generator'])
+
     # Generate build files
-    output = subprocess.check_output(['cmake', '-B' + build['dir_name'], '-H/home/dan/tmp/blob-detect'])
+    output = subprocess.check_output(command)
     # Pipe output to vim
     print(output)
 
 def debug():
-    print(subprocess.check_output(['ls', '-al']))
+    print(database)
     #cmake_auto()
