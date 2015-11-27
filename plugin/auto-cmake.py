@@ -66,7 +66,7 @@ def loadDb():
     db_file.close()
 
 def get_current_build():
-    return database.builds['source_location']['debug']
+    return database.builds['/home/dan/tmp/blob-detect']['debug']
 
 
 # Function auto loaded when a cmake build is found
@@ -74,15 +74,21 @@ def cmake_auto():
     '''
     Fucction to be automatically callled when a CMake directory is found.
     '''
-    bname = get_current_build()['name']
+    bname = get_current_build()['dir_name']
     vim.command('set makeprg=make\ -C\ ' + bname)
 
 
 # Public facing functions from the vim plugin
 def cmake_edit():
+    '''
+    Load the build database into vim for editing
+    '''
     vim.command('edit ' + bfile)
 
 def cmake_reload():
+    '''
+    Reload the database (after editing)
+    '''
     loadDb()
 
 def cmake_run():
@@ -92,10 +98,19 @@ def cmake_debug():
     subprocess.call(get_current_build()['debug'], '')
 
 def cmake_generate():
-    cwd = vim.command('pwd')
-    if cwd in database.builds:
-        if not os.path.exists(cwd):
-            os.mkdir(cwd)
+    '''
+    Generate a new cmake build
+    '''
+    build = get_current_build()
+
+    # Check to see if the build directory already exist, if not create it
+    if not os.path.exists(build['dir_name']):
+        os.mkdir(build['dir_name'])
+
+    # Generate build files
+    output = subprocess.check_output(['cmake', '-B' + build['dir_name'], '-H/home/dan/tmp/blob-detect'])
+    # Pipe output to vim
+    print(output)
 
 def debug():
     print(subprocess.check_output(['ls', '-al']))
