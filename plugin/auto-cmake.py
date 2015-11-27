@@ -98,4 +98,5 @@ def cmake_generate():
             os.mkdir(cwd)
 
 def debug():
-    cmake_auto()
+    print(subprocess.check_output(['ls', '-al']))
+    #cmake_auto()
