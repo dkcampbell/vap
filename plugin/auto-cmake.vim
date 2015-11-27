@@ -16,7 +16,8 @@ if !exists('g:auto_cmake_build_dir')
     let g:auto_cmake_build_dir = '~/builds'
 endif
 
-pyfile auto-cmake.py
+let s:cwd = escape(expand('<sfile>:p:h'), '\')
+exe 'pyfile ' . s:cwd . '/auto-cmake.py'
 
 "Initialize the build directory if this is the first time auto-cmake is used.
 python auto_cmake_init()
