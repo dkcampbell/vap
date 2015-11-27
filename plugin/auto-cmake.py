@@ -95,7 +95,7 @@ def cmake_auto():
     build = get_current_build()
 
     if build is not None:
-        set_make_prg()
+        set_make_prg(build)
 
 
 # Public facing functions from the vim plugin
