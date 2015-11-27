@@ -65,8 +65,16 @@ def loadDb():
     database = CMakeDatabase(json.loads(db_file.read()))
     db_file.close()
 
+def get_vim_cwd():
+    return vim.eval('getcwd()')
+
 def get_current_build():
-    return database.builds['/home/dan/tmp/blob-detect']['debug']
+    cwd = get_vim_cwd()
+    if cwd in database.builds:
+        # TODO: support multiple builds
+        return database.builds[cwd]['debug']
+    else:
+        return None
 
 
 # Function auto loaded when a cmake build is found
@@ -74,8 +82,11 @@ def cmake_auto():
     '''
     Fucction to be automatically callled when a CMake directory is found.
     '''
-    bname = get_current_build()['dir_name']
-    vim.command('set makeprg=make\ -C\ ' + bname)
+    build = get_current_build()
+
+    if build is not None:
+        bname = get_current_build()['dir_name']
+        vim.command('set makeprg=make\ -C\ ' + bname)
 
 
 # Public facing functions from the vim plugin
@@ -102,6 +113,10 @@ def cmake_generate():
     Generate a new cmake build
     '''
     build = get_current_build()
+
+    if build is None:
+        print('Could not find project')
+        return
 
     # Check to see if the build directory already exist, if not create it
     if not os.path.exists(build['dir_name']):
@@ -140,5 +155,4 @@ def cmake_generate():
     print(output)
 
 def debug():
-    print(database)
-    #cmake_auto()
+    print(get_vim_cwd())
