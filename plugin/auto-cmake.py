@@ -70,8 +70,8 @@ def get_current_build():
     cwd = get_vim_cwd()
     if cwd in database.builds:
         for build in database.builds[cwd]:
-            if database.builds[build]['default']:
-                return database.builds[build]
+            if database.builds[cwd][build]['default']:
+                return database.builds[cwd][build]
     else:
         return None
 
