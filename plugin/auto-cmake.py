@@ -122,7 +122,7 @@ def cmake_generate():
     command = [
         'cmake',
         '-B' + build['dir_name'],
-        '-H/home/dan/tmp/blob-detect'
+        '-H' + get_vim_cwd()
     ]
 
     # Check if option is a non-empty string
