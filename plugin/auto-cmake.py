@@ -66,10 +66,12 @@ def get_vim_cwd():
     return vim.eval('getcwd()')
 
 def get_current_build():
+    # TODO: Add support for selecting different build configurations
     cwd = get_vim_cwd()
     if cwd in database.builds:
-        # TODO: support multiple builds
-        return database.builds[cwd]['debug']
+        for build in database.builds[cwd]
+            if build['default']:
+                return build
     else:
         return None
 
