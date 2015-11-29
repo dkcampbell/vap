@@ -17,7 +17,7 @@ class CMakeDatabase(object):
 def auto_cmake_init():
     # Create build directory if it doesn't already exist
     global bfile
-    bfile = os.path.expanduser(vim.eval('g:auto_cmake_builds_config'))
+    bfile = os.path.expanduser(vim.eval('g:auto_projects_config'))
 
     # Create configuration file if it doesn't already exits
     if not os.path.exists(bfile):

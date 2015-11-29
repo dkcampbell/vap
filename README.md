@@ -1,5 +1,5 @@
-vim-auto-cmake
-==============
+vim-auto-projects
+=================
 
-An attempt at better integration of vim and cmake for my personal development
-style.
+Project management plugin for vim. Personalized for my development workflow.
+Probably not overly useful to anyone else.
