@@ -3,7 +3,11 @@ import os
 import subprocess
 import vim
 
-class CMakeDatabase(object):
+AP_TARGET = None
+BUILD_FILE = None
+DATABASE = None
+
+class ProjectDatabase(object):
     def __init__(self, builds=None):
         if builds is not None:
             self.builds = builds
@@ -16,12 +20,12 @@ class CMakeDatabase(object):
 
 def auto_projects_init():
     # Create build directory if it doesn't already exist
-    global bfile
-    bfile = os.path.expanduser(vim.eval('g:auto_projects_config'))
+    global BUILD_FILE
+    BUILD_FILE = os.path.expanduser(vim.eval('g:auto_projects_config'))
 
     # Create configuration file if it doesn't already exits
-    if not os.path.exists(bfile):
-        db_file = open(bfile, 'w')
+    if not os.path.exists(BUILD_FILE):
+        db_file = open(BUILD_FILE, 'w')
         template = {}
         template['source_location'] = {
             'debug': {
@@ -49,7 +53,7 @@ def auto_projects_init():
                 'default'    : False
             }
         }
-        db = CMakeDatabase(template)
+        db = ProjectDatabase(template)
         db_file.write(str(db))
         db_file.close()
         loadDb()
@@ -57,21 +61,24 @@ def auto_projects_init():
         loadDb()
 
 def loadDb():
-    global database
-    db_file = open(bfile)
-    database = CMakeDatabase(json.loads(db_file.read()))
+    global DATABASE
+    db_file = open(BUILD_FILE)
+    DATABASE = ProjectDatabase(json.loads(db_file.read()))
     db_file.close()
 
 def get_vim_cwd():
     return vim.eval('getcwd()')
 
 def get_current_build():
-    # TODO: Add support for selecting different build configurations
     cwd = get_vim_cwd()
-    if cwd in database.builds:
-        for build in database.builds[cwd]:
-            if database.builds[cwd][build]['default']:
-                return database.builds[cwd][build]
+    if cwd in DATABASE.builds:
+        # If a target is manually set automatically return it
+        if AP_TARGET is not None:
+            return DATABASE.builds[cwd][AP_TARGET]
+        # If target isn't manually selected search for the default
+        for build in DATABASE.builds[cwd]:
+                if DATABASE.builds[cwd][build]['default']:
+                    return DATABASE.builds[cwd][build]
     else:
         return None
 
@@ -92,7 +99,7 @@ def set_make_prg(build):
 # Function auto loaded when a projects directory is found
 def projects_auto():
     '''
-    Fucction to be automatically callled when a CMake directory is found.
+    Fucction to be automatically callled when a project directory is found.
     '''
     build = get_current_build()
 
@@ -105,7 +112,7 @@ def ap_edit():
     '''
     Load the build database into vim for editing
     '''
-    vim.command('edit ' + bfile)
+    vim.command('edit ' + BUILD_FILE)
 
 def ap_reload():
     '''
@@ -118,6 +125,14 @@ def ap_run():
 
 def ap_debug():
     subprocess.call(get_current_build()['debug'], '')
+
+def ap_set_target(target):
+    '''
+    Each project supports multiple builds. This function is used if you want
+    to select a build thats not the default.
+    '''
+    global AP_TARGET
+    AP_TARGET = target
 
 def ap_cmake_generate():
     '''
