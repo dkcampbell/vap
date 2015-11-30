@@ -2,11 +2,11 @@
 "Maintainer:   Dan Campbell <http://compiledworks.com>
 "Version:      0.0
 
-"if exists('g:loaded_auto_projects') || &cp
-"    finish
-"else
-"    let g:loaded_auto_projects = 1
-"endif
+if exists('g:loaded_auto_projects') || &cp
+    finish
+else
+    let g:loaded_auto_projects = 1
+endif
 
 if !has('python')
     finish
@@ -19,10 +19,10 @@ endif
 let s:cwd = escape(expand('<sfile>:p:h'), '\')
 exe 'pyfile ' . s:cwd . '/auto-projects.py'
 
-"Initialize the build directory if this is the first time auto-cmake is used.
-python auto_cmake_init()
-"If in a cmake project diretory load the appropriate settings
-python cmake_auto()
+"Initialize the builds.json file if this is the first time auto-projects is used.
+python auto_projects_init()
+"If in a projects diretory load the appropriate settings
+python projects_auto()
 
 command! CMake         : python debug()
 command! CMakeEdit     : python cmake_edit()

@@ -14,7 +14,7 @@ class CMakeDatabase(object):
         return json.dumps(self.builds, sort_keys=True, indent=4,
                 separators=(',', ': '))
 
-def auto_cmake_init():
+def auto_projects_init():
     # Create build directory if it doesn't already exist
     global bfile
     bfile = os.path.expanduser(vim.eval('g:auto_projects_config'))
@@ -89,8 +89,8 @@ def set_make_prg(build):
 
 
 
-# Function auto loaded when a cmake build is found
-def cmake_auto():
+# Function auto loaded when a projects directory is found
+def projects_auto():
     '''
     Fucction to be automatically callled when a CMake directory is found.
     '''
