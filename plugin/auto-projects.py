@@ -101,25 +101,25 @@ def projects_auto():
 
 
 # Public facing functions from the vim plugin
-def cmake_edit():
+def ap_edit():
     '''
     Load the build database into vim for editing
     '''
     vim.command('edit ' + bfile)
 
-def cmake_reload():
+def ap_reload():
     '''
     Reload the database (after editing)
     '''
     loadDb()
 
-def cmake_run():
+def ap_run():
     subprocess.call(get_current_build()['run'], '')
 
-def cmake_debug():
+def ap_debug():
     subprocess.call(get_current_build()['debug'], '')
 
-def cmake_generate():
+def ap_cmake_generate():
     '''
     Generate a new cmake build
     '''
