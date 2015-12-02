@@ -111,6 +111,7 @@ def projects_auto():
 
     if build is not None:
         set_make_prg(build)
+        set_ycm_conf(build)
 
 
 
