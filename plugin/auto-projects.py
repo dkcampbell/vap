@@ -98,7 +98,7 @@ def set_make_prg(build):
 def set_ycm_conf(build):
     if 'ycm' in build:
         if build['ycm']:
-            vim.command('set g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
+            vim.command('let g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
             vim.command(YcmRestartServer)
 
 # Function auto loaded when a projects directory is found
