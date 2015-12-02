@@ -32,7 +32,7 @@ def auto_projects_init():
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'debug_run'  : '',
-                'default'    : True
+                'default'    : True,
                 'dir_name'   : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
@@ -45,7 +45,7 @@ def auto_projects_init():
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'debug_run'  : '',
-                'default'    : False
+                'default'    : False,
                 'dir_name'   : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
