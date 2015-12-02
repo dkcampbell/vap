@@ -29,28 +29,30 @@ def auto_projects_init():
         template = {}
         template['source_location'] = {
             'debug': {
-                'dir_name'   : 'folder-name',
-                'type'       : 'DEBUG',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
-                'toolchain'  : '',
-                'extra_args' : [],
-                'run'        : '',
                 'debug_run'  : '',
-                'generator'  : 'Unix Makefiles',
                 'default'    : True
+                'dir_name'   : 'folder-name',
+                'extra_args' : [],
+                'generator'  : 'Unix Makefiles',
+                'run'        : '',
+                'toolchain'  : '',
+                'type'       : 'DEBUG',
+                'ycm'        : False
             },
             'release': {
-                'dir_name'   : 'folder-name',
-                'type'       : 'RELEASE',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
-                'toolchain'  : '',
-                'extra_args' : [],
-                'run'        : '',
                 'debug_run'  : '',
-                'generator'  : 'Unix Makefiles',
                 'default'    : False
+                'dir_name'   : 'folder-name',
+                'extra_args' : [],
+                'generator'  : 'Unix Makefiles',
+                'run'        : '',
+                'toolchain'  : '',
+                'type'       : 'RELEASE',
+                'ycm'        : False
             }
         }
         db = ProjectDatabase(template)
@@ -82,7 +84,6 @@ def get_current_build():
     else:
         return None
 
-# TODO: Make this more robust
 def set_make_prg(build):
     if 'generator' in build:
         if build['generator'] == 'Unix Makefiles':
@@ -94,7 +95,12 @@ def set_make_prg(build):
     else:
         vim.command('set makeprg=make\ -C\ ' + build['dir_name'])
 
-
+def set_ycm_conf(build):
+    if 'ycm' in build:
+        if build['ycm']:
+            vim.command('set g:ycm_global_ycm_extra_conf=' +
+                build['dir_name'] + '.ycm_extra_conf.py')
+            vim.command(YcmRestartServer)
 
 # Function auto loaded when a projects directory is found
 def projects_auto():
@@ -105,6 +111,7 @@ def projects_auto():
 
     if build is not None:
         set_make_prg(build)
+
 
 
 # Public facing functions from the vim plugin
