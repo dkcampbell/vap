@@ -99,7 +99,7 @@ def set_make_prg(build):
 # Function auto loaded when a projects directory is found
 def projects_auto():
     '''
-    Fucction to be automatically callled when a project directory is found.
+    Function to be automatically callled when a project directory is found.
     '''
     build = get_current_build()
 
@@ -116,9 +116,11 @@ def ap_edit():
 
 def ap_reload():
     '''
-    Reload the database (after editing)
+    Reload the projects database stored in memory.
     '''
     loadDb()
+    # Auto load updated settings
+    projects_auto()
 
 def ap_run():
     subprocess.call(get_current_build()['run'], '')
@@ -133,6 +135,8 @@ def ap_set_target(target):
     '''
     global AP_TARGET
     AP_TARGET = target
+    # Reload settings with the new target assigned
+    projects_auto()
 
 def ap_cmake_generate():
     '''
