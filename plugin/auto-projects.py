@@ -102,6 +102,7 @@ def set_ycm_conf(build):
 
 def dispatch_run(cmd):
     try:
+        print('Dispatch ' + ' '.join(cmd))
         vim.command('Dispatch ' + ' '.join(cmd))
     except:
         output = subprocess.check_output(cmd)
