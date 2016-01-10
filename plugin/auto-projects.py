@@ -135,10 +135,10 @@ def ap_reload():
     projects_auto()
 
 def ap_run():
-    subprocess.call(get_current_build()['run'], '')
+    dispatch_run(get_current_build()['run'])
 
 def ap_debug():
-    subprocess.call(get_current_build()['debug'], '')
+    dispatch_run(get_current_build()['debug'])
 
 def ap_set_target(target):
     '''
