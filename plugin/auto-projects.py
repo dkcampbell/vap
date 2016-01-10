@@ -101,6 +101,10 @@ def set_ycm_conf(build):
             vim.command('let g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
 
 def dispatch_run(cmd):
+    if cmd is '':
+        print('Command not configured')
+        return
+
     try:
         print('Dispatch ' + ' '.join(cmd))
         vim.command('Dispatch ' + ' '.join(cmd))
