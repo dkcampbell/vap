@@ -189,7 +189,7 @@ def ap_cmake_generate():
 
     if 'generator' in build and build['generator']:
         command.append('-G')
-        command.append(build['generator'])
+        command.append("'" + build['generator'] + "'")
 
     dispatch_run(command)
 
