@@ -101,9 +101,9 @@ def set_ycm_conf(build):
             vim.command('let g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
 
 def dispatch_run(cmd):
-    if vim.eval('g:autoloaded_dispatch'):
-        print('has dispatch')
-    else:
+    try:
+        vim.command('Dispatch ' + ' '.join(cmd))
+    except:
         output = subprocess.check_output(cmd)
         print(output)
 
