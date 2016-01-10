@@ -138,7 +138,7 @@ def ap_run():
     dispatch_run(get_current_build()['run'])
 
 def ap_debug():
-    dispatch_run(get_current_build()['debug'])
+    dispatch_run(get_current_build()['debug_run'])
 
 def ap_set_target(target):
     '''
