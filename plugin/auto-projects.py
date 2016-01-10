@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import vim
 
@@ -195,5 +196,15 @@ def ap_cmake_generate():
         command.append('-G')
         command.append("'" + build['generator'] + "'")
 
+    # Run CMake
     dispatch_run(command)
+
+    # Copy the YCM file over if appropriate
+    if 'ycm' in build and build['ycm']:
+        try:
+            shutil.copy2('../ycm_extra_conf.py', build['dir_name']
+                    + '.ycm_extra_conf.py')
+        except:
+            pass
+
 
