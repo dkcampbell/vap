@@ -37,12 +37,12 @@ def auto_projects_init():
             'debug': {
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
-                'debug_run'  : '',
+                'debug_run'  : [],
                 'default'    : True,
                 'dir_name'   : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
-                'run'        : '',
+                'run'        : [],
                 'toolchain'  : '',
                 'type'       : 'DEBUG',
                 'ycm'        : False
@@ -50,12 +50,12 @@ def auto_projects_init():
             'release': {
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
-                'debug_run'  : '',
+                'debug_run'  : [],
                 'default'    : False,
                 'dir_name'   : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
-                'run'        : '',
+                'run'        : [],
                 'toolchain'  : '',
                 'type'       : 'RELEASE',
                 'ycm'        : False
