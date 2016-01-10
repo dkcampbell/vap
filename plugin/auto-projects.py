@@ -3,9 +3,9 @@ import os
 import subprocess
 import vim
 
-AP_TARGET = None
+AP_TARGET  = None
 BUILD_FILE = None
-DATABASE = None
+DATABASE   = None
 
 class ProjectDatabase(object):
     def __init__(self, builds=None):
@@ -17,6 +17,12 @@ class ProjectDatabase(object):
     def __str__(self):
         return json.dumps(self.builds, sort_keys=True, indent=4,
                 separators=(',', ': '))
+
+def loadDb():
+    global DATABASE
+    db_file = open(BUILD_FILE)
+    DATABASE = ProjectDatabase(json.loads(db_file.read()))
+    db_file.close()
 
 def auto_projects_init():
     # Create build directory if it doesn't already exist
@@ -62,12 +68,6 @@ def auto_projects_init():
     else:
         loadDb()
 
-def loadDb():
-    global DATABASE
-    db_file = open(BUILD_FILE)
-    DATABASE = ProjectDatabase(json.loads(db_file.read()))
-    db_file.close()
-
 def get_vim_cwd():
     return vim.eval('getcwd()')
 
@@ -100,6 +100,13 @@ def set_ycm_conf(build):
         if build['ycm']:
             vim.command('let g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
 
+def dispatch_run(cmd):
+    if vim.eval('g:autoloaded_dispatch'):
+        print('has dispatch')
+    else:
+        output = subprocess.check_output(cmd)
+        print(output)
+
 # Function auto loaded when a projects directory is found
 def projects_auto():
     '''
@@ -110,8 +117,6 @@ def projects_auto():
     if build is not None:
         set_make_prg(build)
         set_ycm_conf(build)
-
-
 
 # Public facing functions from the vim plugin
 def ap_edit():
@@ -185,10 +190,5 @@ def ap_cmake_generate():
         command.append('-G')
         command.append(build['generator'])
 
-    # Generate build files
-    output = subprocess.check_output(command)
-    # Pipe output to vim
-    print(output)
+    dispatch_run(command)
 
-def debug():
-    print(get_vim_cwd())

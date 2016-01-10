@@ -21,10 +21,10 @@ exe 'pyfile ' . s:cwd . '/auto-projects.py'
 
 "Initialize the builds.json file if this is the first time auto-projects is used.
 python auto_projects_init()
+
 "If in a projects diretory load the appropriate settings
 python projects_auto()
 
-command! PDebug          : python debug()
 command! CMakeGenerate   : python ap_cmake_generate()
 command! Edit            : python ap_edit()
 command! Reload          : python ap_reload()
