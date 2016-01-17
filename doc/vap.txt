@@ -1,0 +1,25 @@
+*vap.txt* A plugin for project configuration
+
+Author:  Dan Campbell <http://compiledworks.com>
+License: MIT
+
+This plugin is only available when Vim is compiled with Python support.
+VAP will only work with compatibility mode disabled.
+
+INTRODUCTION                                    *VAP*
+
+VAP, or Vim Auto Projects, is a poorly named tool for managing configurations
+of C/C++ projects using the CMake build system. VAP, once configured, will
+automatically enable Vim to work with out of source builds, provide code
+completion information to the YouCompleteMe plugin, and launch builds of a
+project asynchronously using the vim-dispatch plugin.
+
+CONFIGURATION                                         *vap-config*
+
+
+CUSTOMIZING                                     *vap-customizing*
+
+ISSUES                                          *vap-issues*
+
+
+ vim:tw=78:ts=8:ft=help:norl:
