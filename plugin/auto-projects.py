@@ -69,11 +69,11 @@ def auto_projects_init():
     else:
         loadDb()
 
-def get_vim_cwd():
-    return vim.eval('getcwd()')
+def get_script_directory():
+    return vim.eval('s:cwd')
 
 def get_current_build():
-    cwd = get_vim_cwd()
+    cwd = os.getcwd()
     if cwd in DATABASE.builds:
         # If a target is manually set automatically return it
         if AP_TARGET is not None:
@@ -172,7 +172,7 @@ def ap_cmake_generate():
     command = [
         'cmake',
         '-B' + build['dir_name'],
-        '-H' + get_vim_cwd()
+        '-H' + os.getcwd()
     ]
 
     # Check if option is a non-empty string
@@ -201,10 +201,7 @@ def ap_cmake_generate():
 
     # Copy the YCM file over if appropriate
     if 'ycm' in build and build['ycm']:
-        try:
-            shutil.copy2('../ycm_extra_conf.py', build['dir_name']
-                    + '.ycm_extra_conf.py')
-        except:
-            pass
-
+        srcFile = get_script_directory() + '/../ycm_extra_conf.py'
+        dstFile = build['dir_name'] + '.ycm_extra_conf.py'
+        shutil.copy2(srcFile, dstFile)
 
