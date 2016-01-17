@@ -1,5 +1,5 @@
-vim-auto-projects
-=================
+VAP
+===
 
-Project management plugin for vim. Personalized for my development workflow.
+Project configuration  plugin for Vim. Personalized for my development workflow.
 Probably not overly useful to anyone else.
