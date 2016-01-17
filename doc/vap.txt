@@ -14,16 +14,116 @@ automatically enable Vim to work with out of source builds, provide code
 completion information to the YouCompleteMe plugin, and launch builds of a
 project asynchronously using the vim-dispatch plugin.
 
-VAP is pronoucned like "zap."
+VAP is pronounced like "zap."
 
 CONFIGURATION                                          *vap-config*
+
+VAP configuration works through a JSON file which is called builds.json by
+default. When Vim is started the builds.json is created if it does not already
+exist. VAP will check to see if the current directory is listed as a project
+directory from the configuration file. Based on the options configured in this
+file VAP will modify various settings and commands.
+
+Example default builds.json file:
+{
+    "source_location": {
+        "debug": {
+            "cc": "clang",
+            "cxx": "clang++",
+            "debug_run": [],
+            "default": true,
+            "dir_name": "folder-name",
+            "extra_args": [],
+            "generator": "Unix Makefiles",
+            "run": [],
+            "toolchain": "",
+            "type": "DEBUG",
+            "ycm": false
+        },
+        "release": {
+            "cc": "clang",
+            "cxx": "clang++",
+            "debug_run": [],
+            "default": false,
+            "dir_name": "folder-name",
+            "extra_args": [],
+            "generator": "Unix Makefiles",
+            "run": [],
+            "toolchain": "",
+            "type": "RELEASE",
+            "ycm": false
+        }
+    }
+}
+
+This creates a configuration for a single project with two build
+types.
+
+"source_location" is the directory VAP will associate the settings with. For
+example if instead of "source_location" you had "/home/dan/git/stl-viewer"
+then anytime Vim was started from that directory VAP would use the associated
+data for project management. Nested inside the "source_location" is a list of
+build types. In the example above the "debug" will be the default build type
+used when Vim starts because "default" is set to true. To switch targets you
+can use the |vap-:Target| command.
+
+Build Configuration ~
+
+The following may be used in VAP to configure the behavior of a build.
+
+"cc" - This will set the environment variable for CC, which allows you to
+change the C compiler used when the |vap-:CMakeGenerate| command is used.
+
+"cxx" - This will set the environment variable for CXX, which allows you to
+change the C++ compiler used when the |vap-:CMakeGenerate| command is used.
+
+"debug_run" - List of strings that will be used when the |vap-:Debug| command
+is executed. For example you could have
+"debug_run": [
+    "gdb ./my-program",
+    "-c core"
+]
+
+"default" - If you have multiple build types for a project the one with
+"default" set to true will be used at startup. You can switch to a different
+build by using the |vap-:Target| command.
+
+"dir_name" - The location of the out of source build that will be used when
+|vap-:CMakeGenerate| is used. VAP will also modify the makeprg variable used
+by Vim so that the |:make| command and the Dispatch |dispatch-:Make| command
+will use the proper Makefile.
+
+"extra_args" - Extra arguments to be passed to CMake. For example I use the
+following to output a file containing a clang completion database.
+"extra_args": [
+    "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+]
+
+"generator" - The build generator for CMake to use. Currently only the
+"Unix Makefiles" and "Ninja" generators are integrated with VAP.
+
+"run" - List of strings that will be used when the |vap-:Run| command
+is executed. For example you could have
+"run": [
+    "./my-program"
+]
+
+"toolchain" - This options allows you to select a toolchain file to be used by
+CMake for cross-compiling.
+
+
+"type" - Set the build type to be used by CMake.
+
+"ycm" - If set to true VAP will copy a .ycm_extra_conf.py code completion file
+used by the YouCompleteMe to the out of source build directory. This file is
+setup to read a clang completion database located in the same folder.
 
 COMMANDS                                               *vap-commands*
 
                                                        *vap-:CMakeGenerate*
 :CMakeGenerate         Dispatch CMake asynchronously using the project
                        configuration settings. This will create an out of
-                       source build using configuration values set in the vap
+                       source build using configuration values set in the VAP
                        configuration file.
 
                                                        *vap-:Edit*
@@ -75,9 +175,9 @@ for CMake subprojects, which I may want to use different settings for.
 VAP lacks a lot of error checking for things such as determining if the dispatch
 plugin is installed before using it. It was too much effort to add a solution
 to a problem I don't have. You may see a lot of red if you don't have the
-proper depdencies.
+proper dependencies.
 
-Vap doesn't attempt to prefix any of its commands, for example :Run instead
+VAP doesn't attempt to prefix any of its commands, for example :Run instead
 of :VapRun. I use this plugin daily on multiple computers, it just wasn't
 worth the extra typing to try to avoid conflicts with other plugins.
 
