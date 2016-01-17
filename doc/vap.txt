@@ -49,5 +49,30 @@ CUSTOMIZING                                            *vap-customizing*
 
 ISSUES                                                 *vap-issues*
 
+VAP was designed to be a solution to my daily annoyances with Vim. As a result
+VAP is very much designed for my development workflow. While it may be useful
+for other Vim users who work with several CMake projects it should be known
+that VAP was not designed to be useful for a large userbase.
+
+VAP has not been tested on Windows, and I doubt it will work by default.
+
+VAP decides which build configuration to use based on the working directory
+Vim is started in. This works well for my development style where I enter the
+root directory of the project and type "vim ." to browse the project files in
+Vim. I don't use the gVim program much, but I'm guessing this could likely
+cause GUI versions of vim to not work well with this program.
+
+VAP will not recursively match the build configuration from nested
+directories. This is on purpose, so that I can have different configuration
+for CMake subprojects, which I may want to use different settings for.
+
+VAP lacks a lot of error checking for things such as determining if the dispatch
+plugin is installed before using it. It was too much effort to add a solution
+to a problem I don't have. You may see a lot of red if you don't have the
+proper depdencies.
+
+Vap doesn't attempt to prefix any of its commands, for example :Run instead
+of :VapRun. I use this plugin daily on multiple computers, it just wasn't
+worth the extra typing to try to avoid conflicts with other plugins.
 
  vim:tw=78:ts=8:ft=help:norl:
