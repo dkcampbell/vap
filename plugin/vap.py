@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import vim
 
-AP_TARGET  = None
+VAP_TARGET  = None
 BUILD_FILE = None
 DATABASE   = None
 
@@ -25,10 +25,10 @@ def loadDb():
     DATABASE = ProjectDatabase(json.loads(db_file.read()))
     db_file.close()
 
-def auto_projects_init():
+def vap_init():
     # Create build directory if it doesn't already exist
     global BUILD_FILE
-    BUILD_FILE = os.path.expanduser(vim.eval('g:auto_projects_config'))
+    BUILD_FILE = os.path.expanduser(vim.eval('g:vap_config'))
 
     # Create configuration file if it doesn't already exits
     if not os.path.exists(BUILD_FILE):
@@ -76,8 +76,8 @@ def get_current_build():
     cwd = os.getcwd()
     if cwd in DATABASE.builds:
         # If a target is manually set automatically return it
-        if AP_TARGET is not None:
-            return DATABASE.builds[cwd][AP_TARGET]
+        if VAP_TARGET is not None:
+            return DATABASE.builds[cwd][VAP_TARGET]
         # If target isn't manually selected search for the default
         for build in DATABASE.builds[cwd]:
                 if DATABASE.builds[cwd][build]['default']:
@@ -114,7 +114,7 @@ def dispatch_run(cmd):
         print(output)
 
 # Function auto loaded when a projects directory is found
-def projects_auto():
+def vap_auto():
     '''
     Function to be automatically callled when a project directory is found.
     '''
@@ -125,37 +125,37 @@ def projects_auto():
         set_ycm_conf(build)
 
 # Public facing functions from the vim plugin
-def ap_edit():
+def vap_edit():
     '''
     Load the build database into vim for editing
     '''
     vim.command('edit ' + BUILD_FILE)
 
-def ap_reload():
+def vap_reload():
     '''
     Reload the projects database stored in memory.
     '''
     loadDb()
     # Auto load updated settings
-    projects_auto()
+    vap_auto()
 
-def ap_run():
+def vap_run():
     dispatch_run(get_current_build()['run'])
 
-def ap_debug():
+def vap_debug():
     dispatch_run(get_current_build()['debug_run'])
 
-def ap_set_target(target):
+def vap_set_target(target):
     '''
     Each project supports multiple builds. This function is used if you want
     to select a build thats not the default.
     '''
-    global AP_TARGET
-    AP_TARGET = target
+    global VAP_TARGET
+    VAP_TARGET = target
     # Reload settings with the new target assigned
-    projects_auto()
+    vap_auto()
 
-def ap_cmake_generate():
+def vap_cmake_generate():
     '''
     Generate a new cmake build
     '''
