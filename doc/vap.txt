@@ -1,6 +1,6 @@
 *vap.txt* A plugin for project configuration
 
-Author:  Dan Campbell <http://compiledworks.com>
+Author:  Dan Campbell <https://compiledworks.com>
 License: MIT
 
 This plugin is only available when Vim is compiled with Python support.
