@@ -49,6 +49,8 @@ CUSTOMIZING                                            *vap-customizing*
 
 VAP only supports one variable that can be used for configuration. You can use
 g:vap_config to specify the location of the VAP configuration file.
+
+Example:
     let g:vap_config = 'path/to/builds.json'
 
 ISSUES                                                 *vap-issues*
