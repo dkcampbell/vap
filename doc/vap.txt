@@ -6,7 +6,7 @@ License: MIT
 This plugin is only available when Vim is compiled with Python support.
 VAP will only work with compatibility mode disabled.
 
-INTRODUCTION                                    *VAP*
+INTRODUCTION                                           *VAP*
 
 VAP, or Vim Auto Projects, is a poorly named tool for managing configurations
 of C/C++ projects using the CMake build system. VAP, once configured, will
@@ -14,12 +14,40 @@ automatically enable Vim to work with out of source builds, provide code
 completion information to the YouCompleteMe plugin, and launch builds of a
 project asynchronously using the vim-dispatch plugin.
 
-CONFIGURATION                                         *vap-config*
+VAP is pronoucned like "zap."
 
+CONFIGURATION                                          *vap-config*
 
-CUSTOMIZING                                     *vap-customizing*
+COMMANDS                                               *vap-commands*
 
-ISSUES                                          *vap-issues*
+                                                       *vap-:CMakeGenerate*
+:CMakeGenerate         Dispatch CMake asynchronously using the project
+                       configuration settings. This will create an out of
+                       source build using configuration values set in the vap
+                       configuration file.
+
+                                                       *vap-:Edit*
+:Edit                  Load the VAP configuration file into a buffer for easy
+                       editing.
+
+                                                       *vap-:Reload*
+:Reload                Reload VAP configuration file without restarting Vim.
+
+                                                       *vap-:Run*
+:Run                   Dispatch the "run" command from the VAP configuration
+                       file.
+
+                                                       *vap-:Debug*
+:Debug                 Dispatch the "debug_run" command from the VAP
+                       configuration file.
+
+                                                       *vap-:Target*
+:Target [arguments]    Switch to a different build target defined in the VAP
+                       configuration file.
+
+CUSTOMIZING                                            *vap-customizing*
+
+ISSUES                                                 *vap-issues*
 
 
  vim:tw=78:ts=8:ft=help:norl:
