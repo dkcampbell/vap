@@ -9,7 +9,7 @@ VAP will only work with compatibility mode disabled.
 INTRODUCTION                                           *VAP*
 
 VAP, or Vim Auto Projects, is a poorly named tool for managing configurations
-of C/C++ projects using the CMake build system. VAP, once configured, will
+of C and C++ projects using the CMake build system. VAP, once configured, will
 automatically enable Vim to work with out of source builds, provide code
 completion information to the YouCompleteMe plugin, and launch builds of a
 project asynchronously using the vim-dispatch plugin.
@@ -18,11 +18,11 @@ VAP is pronounced like "zap."
 
 CONFIGURATION                                          *vap-config*
 
-VAP configuration works through a JSON file which is called builds.json by
-default. When Vim is started the builds.json is created if it does not already
-exist. VAP will check to see if the current directory is listed as a project
-directory from the configuration file. Based on the options configured in this
-file VAP will modify various settings and commands.
+VAP configuration works through a JSON file named "builds.json" by
+default. When Vim is started the configuration file is created if it does not
+already exist. VAP will check to see if the current directory is listed as a
+project directory from the configuration file. Based on the options configured
+in the configuration file VAP will modify various settings and commands.
 
 Example default builds.json file:
 {
@@ -61,15 +61,16 @@ types.
 
 "source_location" is the directory VAP will associate the settings with. For
 example if instead of "source_location" you had "/home/dan/git/stl-viewer"
-then anytime Vim was started from that directory VAP would use the associated
-data for project management. Nested inside the "source_location" is a list of
-build types. In the example above the "debug" will be the default build type
-used when Vim starts because "default" is set to true. To switch targets you
-can use the |vap-:Target| command.
+then anytime Vim is started from that directory VAP would use the associated
+data for project configuration. Nested inside the "source_location" is a list
+of build types. In the example above the "debug" configuration will be the
+default build type used when Vim starts because "default" is set to true. To
+switch targets you can use the |vap-:Target| command.
 
 Build Configuration ~
 
-The following may be used in VAP to configure the behavior of a build.
+The following properties may be used in VAP to configure the behavior of a
+build.
 
 "cc" - This will set the environment variable for CC, which allows you to
 change the C compiler used when the |vap-:CMakeGenerate| command is used.
@@ -78,7 +79,7 @@ change the C compiler used when the |vap-:CMakeGenerate| command is used.
 change the C++ compiler used when the |vap-:CMakeGenerate| command is used.
 
 "debug_run" - List of strings that will be used when the |vap-:Debug| command
-is executed. For example you could have
+is executed. For example:
 "debug_run": [
     "gdb ./my-program",
     "-c core"
@@ -89,9 +90,9 @@ is executed. For example you could have
 build by using the |vap-:Target| command.
 
 "dir_name" - The location of the out of source build that will be used when
-|vap-:CMakeGenerate| is used. VAP will also modify the makeprg variable used
-by Vim so that the |:make| command and the Dispatch |dispatch-:Make| command
-will use the proper Makefile.
+|vap-:CMakeGenerate| is executed. VAP will also modify the makeprg variable
+used by Vim so that the |:make| command and the |dispatch-:Make|
+command will use the proper Makefile.
 
 "extra_args" - Extra arguments to be passed to CMake. For example I use the
 following to output a file containing a clang completion database.
@@ -103,7 +104,7 @@ following to output a file containing a clang completion database.
 "Unix Makefiles" and "Ninja" generators are integrated with VAP.
 
 "run" - List of strings that will be used when the |vap-:Run| command
-is executed. For example you could have
+is executed. For example:
 "run": [
     "./my-program"
 ]
@@ -111,12 +112,11 @@ is executed. For example you could have
 "toolchain" - This options allows you to select a toolchain file to be used by
 CMake for cross-compiling.
 
-
 "type" - Set the build type to be used by CMake.
 
-"ycm" - If set to true VAP will copy a .ycm_extra_conf.py code completion file
-used by the YouCompleteMe to the out of source build directory. This file is
-setup to read a clang completion database located in the same folder.
+"ycm" - If set to true VAP will copy a .ycm_extra_conf.py file, a YouCompleteMe
+configuration file, to the out of source build directory. This file is setup
+to read a clang completion database located in the same folder.
 
 COMMANDS                                               *vap-commands*
 
@@ -131,7 +131,8 @@ COMMANDS                                               *vap-commands*
                        editing.
 
                                                        *vap-:Reload*
-:Reload                Reload VAP configuration file without restarting Vim.
+:Reload                Reload the VAP configuration file without restarting
+                       Vim.
 
                                                        *vap-:Run*
 :Run                   Dispatch the "run" command from the VAP configuration
@@ -147,7 +148,7 @@ COMMANDS                                               *vap-commands*
 
 CUSTOMIZING                                            *vap-customizing*
 
-VAP only supports one variable that can be used for configuration. You can use
+VAP only supports one variable that can be used for customization. You can use
 g:vap_config to specify the location of the VAP configuration file.
 
 Example:
@@ -166,7 +167,7 @@ VAP decides which build configuration to use based on the working directory
 Vim is started in. This works well for my development style where I enter the
 root directory of the project and type "vim ." to browse the project files in
 Vim. I don't use the gVim program much, but I'm guessing this could likely
-cause GUI versions of vim to not work well with this program.
+cause GUI versions of Vim to not work well with this program.
 
 VAP will not recursively match the build configuration from nested
 directories. This is on purpose, so that I can have different configuration
