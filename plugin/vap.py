@@ -100,8 +100,8 @@ def get_current_build():
             return DATABASE.builds[cwd][VAP_TARGET]
         # If target isn't manually selected search for the default
         for build in DATABASE.builds[cwd]:
-                if DATABASE.builds[cwd][build]['default']:
-                    return DATABASE.builds[cwd][build]
+            if DATABASE.builds[cwd][build]['default']:
+                return DATABASE.builds[cwd][build]
     else:
         return None
 
