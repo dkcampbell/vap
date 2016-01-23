@@ -18,10 +18,7 @@ Here's a few features of VAP:
 VAP is suitable for daily use. There will be no effort to make VAP backwards
 compatible until a stable version 1.0 is released.
 
-
-VAP version: 0.5
-
-Code name: "Good enough"
+VAP is currently at version: 0.5.
 
 ## Installation ##
 If you use [Vundle](https://github.com/gmarik/vundle), add the following line
