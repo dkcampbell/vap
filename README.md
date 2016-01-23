@@ -7,12 +7,12 @@ behavior of Vim depending on the project you're currently working on.
 
 Here's a few features of VAP:
 
-* Automatically set the makeprg variable to use the Makefile located in the projects out-of-source build.
+* Automatically set the `makeprg` variable to use the Makefile located in the project's out-of-source build.
 * Configure YouCompleteMe to use a CMake generated code completion database.
 * Easily support multiple build targets with CMake.
-* Simplifies use of non default compilers
+* Simplifies use of non-default compilers
 * Convenience commands for running and debugging executables
-* Integration with vim-dispatch plugin for asynchronous task
+* Integration with vim-dispatch plugin for performing asynchronous task
 
 This is release 0.5 of VAP, code name: "Good enough"
 
@@ -28,7 +28,7 @@ Plugin 'dkcampbell/vap'
 
 ## Tutorial ##
 The first time Vim is run after VAP is installed a `builds.json` file will be
-created in $HOME/builds.json. Here is a quick glance at the default
+created in `$HOME/builds.json`. Here is a quick glance at the default
 `builds.json` file:
 
 ```json
@@ -64,15 +64,15 @@ created in $HOME/builds.json. Here is a quick glance at the default
 }
 ```
 
-This is an example of a single project with two build targets. The source_dir
-is the location of the project. If Vim is started in this directory VAP will
-configure the various project settings you have specified for the current
-build target. The particular target choosen by VAP is whichever has "default"
-set to true.
+The configuration above is an example of a single project with two build
+targets. The source_dir is the location of the project. If Vim is started in
+this directory VAP will configure the various project settings you have
+specified for the current build target. The particular target chosen by VAP
+is whichever has "default" set to true.
 
 You can use the `:Edit` command to load `builds.json` file into a buffer for
 easy editing. Here is a modified example used for an actual project I'm
-working on.
+working on:
 
 ```json
 {
@@ -118,12 +118,12 @@ working on.
 ```
 
 This will automatically load the debug target for the immovable-objects
-project when Vim is started in the `/home/dan/git/immovable-objects` folder.
-Among the things it does is set various CMake configuration tweaks. For
-example, when `:CMakeGenerate` is executed it will place the build files in
-the `build_dir` folder. The `extra_args` will be passed to CMake just as you
-would pass them on the commadn line. VAP will also properly setup the :make
-command to work for this project. I can also launch the executable using the
-`:Run` command, which will execute what is configured in the taget for the
+project when Vim is started in the `/home/dan/git/immovable-objects`
+directory.  Among the things it does is set various CMake configuration
+tweaks. For example, when `:CMakeGenerate` is executed it will place the build
+files in the `build_dir` folder. The `extra_args` will be passed to CMake just
+as you would pass them on the command line. VAP will also properly setup the
+`:make` command to work for this project. I can also launch the executable using
+the `:Run` command, which will execute what is configured in the target for the
 `run` property. For more information what the available options do see the
-documentation with `help VAP`.
+documentation with `:help VAP`.
