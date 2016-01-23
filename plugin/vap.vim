@@ -1,6 +1,6 @@
 "VAP A plugin for project configuration
 "Maintainer:   Dan Campbell <https://compiledworks.com>
-"Version:      0.0
+"Version:      0.5
 
 if exists('g:loaded_vap') || &cp
     finish
