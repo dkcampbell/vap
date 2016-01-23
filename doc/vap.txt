@@ -172,10 +172,10 @@ VAP will not recursively match the build configuration from nested
 directories. This is on purpose, so that I can have different configuration
 for CMake subprojects, which I may want to use different settings for.
 
-VAP lacks a lot of error checking for things such as determining if the dispatch
-plugin is installed before using it. It was too much effort to add a solution
-to a problem I don't have. You may see a lot of red if you don't have the
-proper dependencies.
+VAP lacks a lot of error checking for things such as determining if the
+dispatch plugin is installed before using it. It was too much effort to add a
+solution to a problem I don't have. You may see a lot of red if you don't have
+the proper dependencies.
 
 VAP doesn't attempt to prefix any of its commands, for example :Run instead
 of :VapRun. I use this plugin daily on multiple computers, it just wasn't
