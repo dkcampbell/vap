@@ -54,13 +54,13 @@ def vap_init():
     if not os.path.exists(BUILD_FILE):
         db_file = open(BUILD_FILE, 'w')
         template = {}
-        template['source_location'] = {
+        template['source_dir'] = {
             'debug': {
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'debug_run'  : [],
                 'default'    : True,
-                'dir_name'   : 'folder-name',
+                'build_dir'  : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
                 'run'        : [],
@@ -73,7 +73,7 @@ def vap_init():
                 'cxx'        : 'clang++',
                 'debug_run'  : [],
                 'default'    : False,
-                'dir_name'   : 'folder-name',
+                'build_dir'   : 'folder-name',
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
                 'run'        : [],
@@ -108,18 +108,19 @@ def get_current_build():
 def set_make_prg(build):
     if 'generator' in build:
         if build['generator'] == 'Unix Makefiles':
-            vim.command('set makeprg=make\ -C\ ' + build['dir_name'])
+            vim.command('set makeprg=make\ -C\ ' + build['build_dir'])
         elif build['generator'] == 'Ninja':
-            vim.command('set makeprg=ninja\ -C\ ' + build['dir_name'])
+            vim.command('set makeprg=ninja\ -C\ ' + build['build_dir'])
 
     # Assume the default is makefiles
     else:
-        vim.command('set makeprg=make\ -C\ ' + build['dir_name'])
+        vim.command('set makeprg=make\ -C\ ' + build['build_dir'])
 
 def set_ycm_conf(build):
     if 'ycm' in build:
         if build['ycm']:
-            vim.command('let g:ycm_global_ycm_extra_conf=\'' + build['dir_name'] + '/.ycm_extra_conf.py\'')
+            vim.command('let g:ycm_global_ycm_extra_conf=\'' +
+                        build['build_dir'] + '/.ycm_extra_conf.py\'')
 
 def dispatch_run(cmd):
     if cmd is '':
@@ -186,12 +187,12 @@ def vap_cmake_generate():
         return
 
     # Check to see if the build directory already exist, if not create it
-    if not os.path.exists(build['dir_name']):
-        os.mkdir(build['dir_name'])
+    if not os.path.exists(build['build_dir']):
+        os.mkdir(build['build_dir'])
 
     command = [
         'cmake',
-        '-B' + build['dir_name'],
+        '-B' + build['build_dir'],
         '-H' + os.getcwd()
     ]
 
@@ -222,6 +223,6 @@ def vap_cmake_generate():
     # Copy the YCM file over if appropriate
     if 'ycm' in build and build['ycm']:
         srcFile = get_script_directory() + '/../ycm_extra_conf.py'
-        dstFile = build['dir_name'] + '.ycm_extra_conf.py'
+        dstFile = build['build_dir'] + '.ycm_extra_conf.py'
         shutil.copy2(srcFile, dstFile)
 
