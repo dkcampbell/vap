@@ -24,7 +24,7 @@ import shutil
 import subprocess
 import vim
 
-VAP_TARGET  = None
+VAP_TARGET = None
 BUILD_FILE = None
 DATABASE   = None
 
