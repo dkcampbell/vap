@@ -10,7 +10,7 @@ INTRODUCTION                                           *VAP*
 
 VAP, or Vim Auto Projects, is a poorly named tool for managing configurations
 of C and C++ projects using the CMake build system. VAP, once configured, will
-automatically enable Vim to work with out of source builds, provide code
+automatically enable Vim to work with out-of-source builds, provide code
 completion information to the YouCompleteMe plugin, and launch builds of a
 project asynchronously using the vim-dispatch plugin.
 
@@ -89,7 +89,7 @@ is executed. For example:
 "default" set to true will be used at startup. You can switch to a different
 build by using the |vap-:Target| command.
 
-"dir_name" - The location of the out of source build that will be used when
+"dir_name" - The location of the out-of-source build that will be used when
 |vap-:CMakeGenerate| is executed. VAP will also modify the makeprg variable
 used by Vim so that the |:make| command and the |dispatch-:Make|
 command will use the proper Makefile.
@@ -115,7 +115,7 @@ CMake for cross-compiling.
 "type" - Set the build type to be used by CMake.
 
 "ycm" - If set to true VAP will copy a .ycm_extra_conf.py file, a YouCompleteMe
-configuration file, to the out of source build directory. This file is setup
+configuration file, to the out-of-source build directory. This file is setup
 to read a clang completion database located in the same folder.
 
 COMMANDS                                               *vap-commands*
@@ -166,8 +166,7 @@ VAP has not been tested on Windows, and I doubt it will work by default.
 VAP decides which build configuration to use based on the working directory
 Vim is started in. This works well for my development style where I enter the
 root directory of the project and type "vim ." to browse the project files in
-Vim. I don't use the gVim program much, but I'm guessing this could likely
-cause GUI versions of Vim to not work well with this program.
+Vim.
 
 VAP will not recursively match the build configuration from nested
 directories. This is on purpose, so that I can have different configuration
