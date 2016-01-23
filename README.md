@@ -14,9 +14,10 @@ Here's a few features of VAP:
 * Convenience commands for running and debugging executables
 * Integration with vim-dispatch plugin for performing asynchronous task
 
-This is release 0.5 of VAP, code name: "Good enough"
+VAP version: 0.5
+Code name: "Good enough"
 
-It's suitable for daily use. There will be no effort to make VAP backwards
+VAP is suitable for daily use. There will be no effort to make VAP backwards
 compatible until a stable version 1.0 is released.
 
 ## Installation ##
