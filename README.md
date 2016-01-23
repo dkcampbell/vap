@@ -126,4 +126,4 @@ would pass them on the commadn line. VAP will also properly setup the :make
 command to work for this project. I can also launch the executable using the
 `:Run` command, which will execute what is configured in the taget for the
 `run` property. For more information what the available options do see the
-documentation with `help VAP`
+documentation with `help VAP`.
