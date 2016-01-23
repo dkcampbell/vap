@@ -2,8 +2,8 @@ VAP
 ===
 
 VAP is a project configuration plugin for Vim. Useful for people who work with
-several CMake based projects. A JSON based configuration file is used to change
-the behavior of Vim based on the project you're currently working on.
+several CMake based projects. A JSON configuration file is used to change the
+behavior of Vim depending on the project you're currently working on.
 
 Here's a few features of VAP:
 
