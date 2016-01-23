@@ -26,13 +26,13 @@ in the configuration file VAP will modify various settings and commands.
 
 Example default builds.json file:
 {
-    "source_location": {
+    "source_dir": {
         "debug": {
             "cc": "clang",
             "cxx": "clang++",
             "debug_run": [],
             "default": true,
-            "dir_name": "folder-name",
+            "build_dir": "folder-name",
             "extra_args": [],
             "generator": "Unix Makefiles",
             "run": [],
@@ -45,7 +45,7 @@ Example default builds.json file:
             "cxx": "clang++",
             "debug_run": [],
             "default": false,
-            "dir_name": "folder-name",
+            "build_dir": "folder-name",
             "extra_args": [],
             "generator": "Unix Makefiles",
             "run": [],
@@ -89,7 +89,7 @@ is executed. For example:
 "default" set to true will be used at startup. You can switch to a different
 build by using the |vap-:Target| command.
 
-"dir_name" - The location of the out-of-source build that will be used when
+"build_dir" - The location of the out-of-source build that will be used when
 |vap-:CMakeGenerate| is executed. VAP will also modify the makeprg variable
 used by Vim so that the |:make| command and the |dispatch-:Make|
 command will use the proper Makefile.
