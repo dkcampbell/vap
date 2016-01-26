@@ -105,7 +105,14 @@ def get_current_build():
     else:
         return None
 
-def set_make_prg(build):
+def get_build_targets(*args):
+    cwd = os.getcwd()
+    if cwd in DATABASE.builds:
+        vim.command('let l:targets = "' + "\n".join(DATABASE.builds[cwd].keys()) + '"')
+    else:
+        vim.command('let l:targets = ""')
+
+def set_makeprg(build):
     if 'generator' in build:
         if build['generator'] == 'Unix Makefiles':
             vim.command('set makeprg=make\ -C\ ' + build['build_dir'])
@@ -142,7 +149,7 @@ def vap_auto():
     build = get_current_build()
 
     if build is not None:
-        set_make_prg(build)
+        set_makeprg(build)
         set_ycm_conf(build)
 
 # Public facing functions from the vim plugin

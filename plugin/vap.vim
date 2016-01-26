@@ -25,9 +25,16 @@ python vap_init()
 "If in a projects diretory load the appropriate settings
 python vap_auto()
 
+"Function used for code completion of targets
+function! s:TargetComplete(A, L, P)
+    python get_build_targets()
+    return l:targets
+endfun
+
 command! CMakeGenerate   : python vap_cmake_generate()
 command! Edit            : python vap_edit()
 command! Reload          : python vap_reload()
 command! Run             : python vap_run()
 command! Debug           : python vap_debug()
-command! -nargs=1 Target : python vap_set_target(<f-args>)
+command! -complete=custom,s:TargetComplete -nargs=1 Target : python vap_set_target(<f-args>)
+
