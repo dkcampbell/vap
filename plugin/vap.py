@@ -97,7 +97,10 @@ def get_current_build():
     if cwd in DATABASE.builds:
         # If a target is manually set automatically return it
         if VAP_TARGET is not None:
-            return DATABASE.builds[cwd][VAP_TARGET]
+            if VAP_TARGET in DATABASE.builds[cwd]:
+                return DATABASE.builds[cwd][VAP_TARGET]
+            else:
+                vim.command('echo "Unable to find target"')
         # If target isn't manually selected search for the default
         for build in DATABASE.builds[cwd]:
             if DATABASE.builds[cwd][build]['default']:
