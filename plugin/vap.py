@@ -56,11 +56,12 @@ def vap_init():
         template = {}
         template['source_dir'] = {
             'debug': {
+                'build_dir'  : 'folder-name',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'debug_run'  : [],
                 'default'    : True,
-                'build_dir'  : 'folder-name',
+                'env'        : [],
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
                 'run'        : [],
@@ -69,11 +70,12 @@ def vap_init():
                 'ycm'        : False
             },
             'release': {
+                'build_dir'   : 'folder-name',
                 'cc'         : 'clang',
                 'cxx'        : 'clang++',
                 'debug_run'  : [],
                 'default'    : False,
-                'build_dir'   : 'folder-name',
+                'env'        : [],
                 'extra_args' : [],
                 'generator'  : 'Unix Makefiles',
                 'run'        : [],
@@ -128,9 +130,18 @@ def set_makeprg(build):
 
 def set_ycm_conf(build):
     if 'ycm' in build:
-        if build['ycm']:
-            vim.command('let g:ycm_global_ycm_extra_conf=\'' +
-                        build['build_dir'] + '/.ycm_extra_conf.py\'')
+        vim.command('let g:ycm_global_ycm_extra_conf=\'' +
+            build['build_dir'] + '/.ycm_extra_conf.py\'')
+
+
+def set_env(build):
+    if 'env' in build:
+        for item in build['env']:
+            try:
+                env, val = item.split('=')
+                os.environ(env)
+            except:
+                pass
 
 def dispatch_run(cmd):
     if cmd is '':
@@ -154,6 +165,7 @@ def vap_auto():
     if build is not None:
         set_makeprg(build)
         set_ycm_conf(build)
+        set_env(build)
 
 # Public facing functions from the vim plugin
 def vap_edit():

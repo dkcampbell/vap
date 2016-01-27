@@ -28,11 +28,12 @@ Example default builds.json file:
 {
     "source_dir": {
         "debug": {
+            "build_dir": "folder-name",
             "cc": "clang",
             "cxx": "clang++",
             "debug_run": [],
             "default": true,
-            "build_dir": "folder-name",
+            "env": [],
             "extra_args": [],
             "generator": "Unix Makefiles",
             "run": [],
@@ -41,11 +42,12 @@ Example default builds.json file:
             "ycm": false
         },
         "release": {
+            "build_dir": "folder-name",
             "cc": "clang",
             "cxx": "clang++",
             "debug_run": [],
             "default": false,
-            "build_dir": "folder-name",
+            "env": [],
             "extra_args": [],
             "generator": "Unix Makefiles",
             "run": [],
@@ -72,6 +74,11 @@ Build Configuration ~
 The following properties may be used in VAP to configure the behavior of a
 build.
 
+"build_dir" - The location of the out-of-source build that will be used when
+|vap-:CMakeGenerate| is executed. VAP will also modify the makeprg variable
+used by Vim so that the |:make| command and the |dispatch-:Make|
+command will use the proper Makefile.
+
 "cc" - This will set the environment variable for CC, which allows you to
 change the C compiler used when the |vap-:CMakeGenerate| command is used.
 
@@ -89,10 +96,8 @@ is executed. For example:
 "default" set to true will be used at startup. You can switch to a different
 build by using the |vap-:Target| command.
 
-"build_dir" - The location of the out-of-source build that will be used when
-|vap-:CMakeGenerate| is executed. VAP will also modify the makeprg variable
-used by Vim so that the |:make| command and the |dispatch-:Make|
-command will use the proper Makefile.
+"env" - A list of environment variables to be set when the project is started.
+Strings must contain "=". For example "PATH=/usr/bin"
 
 "extra_args" - Extra arguments to be passed to CMake. For example I use the
 following to output a file containing a clang completion database.
